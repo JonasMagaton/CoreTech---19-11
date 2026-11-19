@@ -1,0 +1,489 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CoreTech | Loja de Hardware</title>
+<style>
+:root {
+  --bg:#101210;
+  --panel:#191d19;
+  --panel2:#222822;
+  --green:#9bea38;
+  --text:#f4f4f4;
+  --muted:#a1aaa0;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{
+  background:var(--bg);
+  color:var(--text);
+  font-family:Arial,sans-serif;
+}
+button,input{font:inherit}
+button{cursor:pointer}
+header{
+  background:#171b17;
+  border-bottom:1px solid #303830;
+  position:sticky;top:0;z-index:10;
+}
+.top{
+  padding:16px 5%;
+  display:flex;align-items:center;
+  justify-content:space-between;gap:20px;
+}
+.logo{
+  font-size:27px;font-weight:900;
+  color:white;white-space:nowrap;
+}
+.logo span{color:var(--green)}
+.search{
+  flex:1;max-width:600px;
+  display:flex;background:white;
+  border-radius:6px;overflow:hidden;
+}
+.search input{
+  width:100%;padding:13px;
+  border:0;outline:0;color:#222;
+}
+.search button{
+  background:var(--green);border:0;
+  padding:0 20px;font-weight:bold;
+}
+.actions{display:flex;gap:10px}
+.btn{
+  border:1px solid #465046;
+  background:#222822;color:white;
+  padding:11px 15px;border-radius:5px;
+}
+.btn:hover{border-color:var(--green)}
+.green{
+  background:var(--green);color:#111;
+  border:0;font-weight:bold;
+}
+nav{
+  display:flex;justify-content:center;
+  flex-wrap:wrap;gap:26px;padding:14px;
+  background:#202520;
+}
+nav a{color:white;text-decoration:none;font-size:13px}
+nav a:hover{color:var(--green)}
+main{max-width:1400px;margin:auto;padding:25px 4%}
+.hero{
+  min-height:300px;padding:50px;
+  border-radius:12px;
+  background:linear-gradient(110deg,#1d2d1c,#263d20,#151a15);
+  display:flex;align-items:center;
+  justify-content:space-between;gap:20px;
+}
+.hero h1{font-size:clamp(30px,5vw,52px);max-width:600px}
+.hero h1 span{color:var(--green)}
+.hero p{color:#c2c9c0;margin:18px 0}
+.hero button{
+  padding:14px 25px;border-radius:5px;
+}
+.hero-icon{font-size:110px;color:var(--green)}
+.section-title{
+  display:flex;justify-content:space-between;
+  align-items:center;margin:35px 0 20px;
+}
+.section-title h2{font-size:23px}
+.section-title span{color:var(--green)}
+.categories{
+  display:grid;grid-template-columns:repeat(7,1fr);
+  gap:12px;
+}
+.category{
+  background:var(--panel);padding:20px 8px;
+  border-radius:8px;text-align:center;
+  border:1px solid #303830;color:white;
+}
+.category:hover,.category.active{
+  border-color:var(--green);color:var(--green);
+}
+.category div{font-size:27px;margin-bottom:10px}
+.category small{font-size:11px}
+.toolbar{
+  display:flex;gap:12px;flex-wrap:wrap;
+  margin-bottom:20px;
+}
+.toolbar select{
+  background:var(--panel);color:white;
+  border:1px solid #444;padding:10px;border-radius:5px;
+}
+.products{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:18px;
+}
+.product{
+  background:var(--panel);border:1px solid #303830;
+  border-radius:9px;overflow:hidden;
+  transition:.2s;display:flex;flex-direction:column;
+}
+.product:hover{transform:translateY(-4px);border-color:var(--green)}
+.product-img{
+  height:180px;background:#252c25;
+  display:flex;align-items:center;justify-content:center;
+  font-size:75px;
+}
+.product-info{padding:17px;display:flex;flex-direction:column;flex:1}
+.tag{
+  font-size:10px;color:var(--green);
+  margin-bottom:10px;font-weight:bold;
+}
+.product h3{font-size:15px;line-height:1.5;min-height:45px}
+.description{
+  color:var(--muted);font-size:12px;
+  line-height:1.5;margin:10px 0;
+}
+.old-price{color:#858d85;text-decoration:line-through;font-size:12px}
+.price{font-size:23px;font-weight:bold;margin:5px 0}
+.installment{color:var(--muted);font-size:11px}
+.product button{
+  margin-top:15px;padding:12px;
+  border-radius:5px;border:0;
+  background:var(--green);font-weight:bold;
+}
+.product button:hover{background:#b3ff58}
+footer{
+  margin-top:60px;padding:35px 5%;
+  background:#191e19;text-align:center;
+  color:var(--muted);line-height:2;
+}
+footer strong{color:var(--green)}
+.overlay{
+  display:none;position:fixed;inset:0;
+  background:#000b;z-index:30;
+  justify-content:center;align-items:center;padding:15px;
+}
+.modal{
+  background:#1b211b;padding:28px;
+  width:100%;max-width:420px;border-radius:10px;
+  max-height:90vh;overflow:auto;
+}
+.modal h2{margin-bottom:20px}
+.modal input{
+  display:block;width:100%;padding:13px;
+  margin:12px 0;border:1px solid #465046;
+  background:#252c25;color:white;border-radius:5px;
+}
+.modal button{padding:12px;border-radius:5px}
+.close{float:right;background:none;color:white;border:0;font-size:23px}
+.modal-action{width:100%;margin-top:10px}
+.cart-item{
+  display:flex;justify-content:space-between;
+  gap:10px;border-bottom:1px solid #394139;
+  padding:15px 0;font-size:13px;
+}
+.cart-item button{padding:5px 9px}
+.cart-total{font-size:22px;margin:20px 0}
+.empty{text-align:center;color:var(--muted);padding:35px}
+.hidden{display:none!important}
+@media(max-width:900px){
+ .products{grid-template-columns:repeat(2,1fr)}
+ .categories{grid-template-columns:repeat(4,1fr)}
+ .hero-icon{font-size:70px}
+}
+@media(max-width:550px){
+ .top{flex-wrap:wrap}
+ .search{order:3;flex-basis:100%}
+ .actions{margin-left:auto}
+ .hero{padding:28px}
+ .hero-icon{display:none}
+ .products{grid-template-columns:1fr 1fr;gap:10px}
+ .product-img{height:125px;font-size:52px}
+ .product-info{padding:10px}
+ .price{font-size:18px}
+ .categories{grid-template-columns:repeat(2,1fr)}
+ nav{gap:13px}
+}
+</style>
+</head>
+<body>
+
+<header>
+ <div class="top">
+  <div class="logo">CORE<span>TECH</span></div>
+  <div class="search">
+   <input id="search" placeholder="O que você está procurando?">
+   <button onclick="renderProducts()">⌕</button>
+  </div>
+  <div class="actions">
+   <button class="btn" onclick="openModal('login')">Entrar</button>
+   <button class="btn green" onclick="openModal('cart')">
+    🛒 <span id="cartCount">0</span>
+   </button>
+  </div>
+ </div>
+ <nav>
+  <a href="#" onclick="filter('Todos')">INÍCIO</a>
+  <a href="#" onclick="filter('Placa de vídeo')">PLACAS DE VÍDEO</a>
+  <a href="#" onclick="filter('Monitor')">MONITORES</a>
+  <a href="#" onclick="filter('SSD')">SSD</a>
+  <a href="#" onclick="filter('Memória RAM')">MEMÓRIAS</a>
+  <a href="#" onclick="filter('Processador')">PROCESSADORES</a>
+  <a href="#" onclick="filter('Placa-mãe')">PLACAS-MÃE</a>
+  <a href="#" onclick="filter('Gabinete')">GABINETES</a>
+ </nav>
+</header>
+
+<main>
+ <section class="hero">
+  <div>
+   <div class="tag">CORETECH STORE • TECNOLOGIA</div>
+   <h1>MONTE SEU SETUP. <span>SUPERE LIMITES.</span></h1>
+   <p>Hardware de qualidade para quem exige alto desempenho.</p>
+   <button class="green" onclick="document.getElementById('catalogo').scrollIntoView({behavior:'smooth'})">
+    CONFERIR PRODUTOS →
+   </button>
+  </div>
+  <div class="hero-icon">⌘</div>
+ </section>
+
+ <div class="section-title">
+  <h2>Explore por <span>categoria</span></h2>
+ </div>
+
+ <section class="categories">
+  <button class="category" onclick="filter('Placa de vídeo')"><div>🎮</div><small>Placas de vídeo</small></button>
+  <button class="category" onclick="filter('Monitor')"><div>🖥️</div><small>Monitores</small></button>
+  <button class="category" onclick="filter('SSD')"><div>💾</div><small>SSD</small></button>
+  <button class="category" onclick="filter('Memória RAM')"><div>🔳</div><small>Memórias RAM</small></button>
+  <button class="category" onclick="filter('Gabinete')"><div>🗄️</div><small>Gabinetes</small></button>
+  <button class="category" onclick="filter('Processador')"><div>⚙️</div><small>Processadores</small></button>
+  <button class="category" onclick="filter('Placa-mãe')"><div>🔧</div><small>Placas-mãe</small></button>
+ </section>
+
+ <section id="catalogo">
+  <div class="section-title">
+   <h2>Produtos em <span>destaque</span></h2>
+   <span id="resultCount"></span>
+  </div>
+  <div class="toolbar">
+   <select id="sort" onchange="renderProducts()">
+    <option value="default">Ordenar por: Destaques</option>
+    <option value="low">Menor preço</option>
+    <option value="high">Maior preço</option>
+   </select>
+   <button class="btn" onclick="filter('Todos')">Ver todos</button>
+  </div>
+  <div class="products" id="products"></div>
+ </section>
+</main>
+
+<footer>
+ <div class="logo">CORE<span>TECH</span></div>
+ <p>Tecnologia, desempenho e confiança.</p>
+ <p>Atendimento: contato@coretech.com.br</p>
+ <p>© 2026 CoreTech. Projeto demonstrativo de loja virtual criado por Jonas e Kauã.</p>
+</footer>
+
+<div class="overlay" id="login">
+ <div class="modal">
+  <button class="close" onclick="closeModal('login')">×</button>
+  <h2 id="loginTitle">Entrar na CoreTech</h2>
+  <form onsubmit="loginUser(event)">
+   <input id="name" placeholder="Seu nome" class="hidden">
+   <input id="email" type="email" placeholder="Seu e-mail" required>
+   <input id="password" type="password" placeholder="Sua senha" required minlength="4">
+   <button class="green modal-action" id="loginButton">ENTRAR</button>
+  </form>
+  <p id="loginMessage" style="margin-top:15px;color:#9bea38;font-size:13px"></p>
+  <p style="margin-top:20px;font-size:13px">
+   <span id="switchText">Não tem uma conta?</span>
+   <a href="#" style="color:#9bea38" onclick="switchLogin(event)">Cadastre-se</a>
+  </p>
+ </div>
+</div>
+
+<div class="overlay" id="cart">
+ <div class="modal">
+  <button class="close" onclick="closeModal('cart')">×</button>
+  <h2>🛒 Meu carrinho</h2>
+  <div id="cartItems"></div>
+  <div class="cart-total">Total: <span id="total">R$ 0,00</span></div>
+  <button class="green modal-action" onclick="checkout()">FINALIZAR COMPRA</button>
+ </div>
+</div>
+
+<script>
+const products = [
+ {id:1,name:"GeForce RTX 4060 8GB",cat:"Placa de vídeo",price:1999,old:2299,icon:"🎮",desc:"GPU NVIDIA com 8GB GDDR6, Ray Tracing e DLSS para jogos em alta qualidade."},
+ {id:2,name:"Radeon RX 7600 8GB",cat:"Placa de vídeo",price:1699,old:1899,icon:"🎮",desc:"Placa AMD com 8GB GDDR6, excelente desempenho em Full HD."},
+ {id:3,name:"Monitor Gamer 24 180Hz",cat:"Monitor",price:799,old:999,icon:"🖥️",desc:"Tela Full HD, 180Hz e baixo tempo de resposta para jogos competitivos."},
+ {id:4,name:"Monitor Gamer 27 QHD",cat:"Monitor",price:1399,old:1599,icon:"🖥️",desc:"Resolução 2560x1440, painel IPS e ótima fidelidade de cores."},
+ {id:5,name:"SSD NVMe 1TB",cat:"SSD",price:429,old:499,icon:"💾",desc:"Armazenamento NVMe de 1TB com alta velocidade de leitura e gravação."},
+ {id:6,name:"SSD SATA 480GB",cat:"SSD",price:199,old:249,icon:"💾",desc:"Ideal para acelerar a inicialização do computador e programas."},
+ {id:7,name:"Memória RAM DDR4 16GB",cat:"Memória RAM",price:249,old:299,icon:"🔳",desc:"Módulo DDR4 de 16GB para multitarefa e jogos."},
+ {id:8,name:"Memória DDR5 32GB",cat:"Memória RAM",price:599,old:699,icon:"🔳",desc:"Kit de memória DDR5 de 32GB para plataformas modernas."},
+ {id:9,name:"Gabinete Gamer Mid Tower",cat:"Gabinete",price:299,old:379,icon:"🗄️",desc:"Gabinete com lateral de vidro temperado e espaço para organização de cabos."},
+ {id:10,name:"Gabinete Gamer RGB",cat:"Gabinete",price:449,old:549,icon:"🗄️",desc:"Design moderno, iluminação RGB e boa circulação de ar."},
+ {id:11,name:"Ryzen 5 5600",cat:"Processador",price:699,old:799,icon:"⚙️",desc:"Processador AMD de 6 núcleos e 12 threads para jogos e produtividade."},
+ {id:12,name:"Ryzen 7 5700X",cat:"Processador",price:999,old:1199,icon:"⚙️",desc:"8 núcleos e 16 threads, ideal para multitarefa e games."},
+ {id:13,name:"Placa-mãe B550M",cat:"Placa-mãe",price:499,old:599,icon:"🔧",desc:"Socket AM4, suporte a processadores Ryzen e armazenamento M.2."},
+ {id:14,name:"Placa-mãe B650M",cat:"Placa-mãe",price:899,old:999,icon:"🔧",desc:"Plataforma AM5, DDR5 e suporte a processadores Ryzen modernos."}
+];
+
+let currentCategory="Todos";
+let cart=JSON.parse(localStorage.getItem("coreCart")||"[]");
+let user=JSON.parse(localStorage.getItem("coreUser")||"null");
+let register=false;
+
+const money=v=>v.toLocaleString("pt-BR",{style:"currency",currency:"BRL"});
+
+function renderProducts(){
+ let q=document.getElementById("search").value.toLowerCase();
+ let list=products.filter(p=>
+  (currentCategory==="Todos"||p.cat===currentCategory)&&
+  (p.name.toLowerCase().includes(q)||p.desc.toLowerCase().includes(q))
+ );
+ let sort=document.getElementById("sort").value;
+ if(sort==="low")list.sort((a,b)=>a.price-b.price);
+ if(sort==="high")list.sort((a,b)=>b.price-a.price);
+
+ document.getElementById("resultCount").textContent=list.length+" produtos";
+ document.getElementById("products").innerHTML=list.map(p=>`
+  <article class="product">
+   <div class="product-img">${p.icon}</div>
+   <div class="product-info">
+    <div class="tag">${p.cat.toUpperCase()}</div>
+    <h3>${p.name}</h3>
+    <p class="description">${p.desc}</p>
+    <span class="old-price">${money(p.old)}</span>
+    <div class="price">${money(p.price)}</div>
+    <span class="installment">ou 10x de ${money(p.price/10)} sem juros*</span>
+    <button onclick="addCart(${p.id})">ADICIONAR AO CARRINHO</button>
+   </div>
+  </article>
+ `).join("")||'<div class="empty">Nenhum produto encontrado.</div>';
+}
+
+function filter(cat){
+ currentCategory=cat;
+ renderProducts();
+ document.getElementById("catalogo").scrollIntoView({behavior:"smooth"});
+}
+
+function addCart(id){
+ let item=cart.find(p=>p.id===id);
+ if(item)item.qty++;
+ else cart.push({id,qty:1});
+ saveCart();
+ alert("Produto adicionado ao carrinho!");
+}
+
+function saveCart(){
+ localStorage.setItem("coreCart",JSON.stringify(cart));
+ document.getElementById("cartCount").textContent=
+ cart.reduce((s,p)=>s+p.qty,0);
+ renderCart();
+}
+
+function renderCart(){
+ let area=document.getElementById("cartItems");
+ if(!cart.length){
+  area.innerHTML='<div class="empty">Seu carrinho está vazio.</div>';
+ }else{
+  area.innerHTML=cart.map(item=>{
+   let p=products.find(x=>x.id===item.id);
+   return `<div class="cart-item">
+    <div><strong>${p.name}</strong><br>
+    ${money(p.price)} × ${item.qty}</div>
+    <div>
+    <button onclick="changeQty(${p.id},-1)">−</button>
+    ${item.qty}
+    <button onclick="changeQty(${p.id},1)">+</button>
+    <button onclick="removeItem(${p.id})">🗑</button>
+    </div></div>`;
+  }).join("");
+ }
+ let total=cart.reduce((s,i)=>s+products.find(p=>p.id===i.id).price*i.qty,0);
+ document.getElementById("total").textContent=money(total);
+}
+
+function changeQty(id,n){
+ let item=cart.find(p=>p.id===id);
+ item.qty+=n;
+ if(item.qty<=0)cart=cart.filter(p=>p.id!==id);
+ saveCart();
+}
+function removeItem(id){
+ cart=cart.filter(p=>p.id!==id);
+ saveCart();
+}
+function openModal(id){
+ if(id==="login"&&user){
+  alert("Você está conectado como "+user.name);
+  return;
+ }
+ document.getElementById(id).style.display="flex";
+ if(id==="cart")renderCart();
+}
+function closeModal(id){
+ document.getElementById(id).style.display="none";
+}
+
+function switchLogin(e){
+ e.preventDefault();
+ register=!register;
+ document.getElementById("name").classList.toggle("hidden",!register);
+ document.getElementById("name").required=register;
+ document.getElementById("loginTitle").textContent=register?"Criar conta":"Entrar na CoreTech";
+ document.getElementById("loginButton").textContent=register?"CADASTRAR":"ENTRAR";
+ document.getElementById("switchText").textContent=register?"Já tem uma conta?":"Não tem uma conta?";
+ e.target.textContent=register?"Fazer login":"Cadastre-se";
+ document.getElementById("loginMessage").textContent="";
+}
+
+function loginUser(e){
+ e.preventDefault();
+ const email=document.getElementById("email").value;
+ const password=document.getElementById("password").value;
+ let users=JSON.parse(localStorage.getItem("coreUsers")||"[]");
+ if(register){
+  if(users.some(u=>u.email===email)){
+   alert("Este e-mail já possui cadastro.");return;
+  }
+  let newUser={
+   name:document.getElementById("name").value,
+   email,password
+  };
+  users.push(newUser);
+  localStorage.setItem("coreUsers",JSON.stringify(users));
+  user=newUser;
+ }else{
+  user=users.find(u=>u.email===email&&u.password===password);
+  if(!user){
+   document.getElementById("loginMessage").textContent="E-mail ou senha incorretos.";
+   return;
+  }
+ }
+ localStorage.setItem("coreUser",JSON.stringify(user));
+ document.getElementById("loginMessage").textContent="Acesso realizado com sucesso!";
+ setTimeout(()=>closeModal("login"),800);
+}
+
+function checkout(){
+ if(!cart.length){alert("Seu carrinho está vazio.");return;}
+ if(!user){
+  closeModal("cart");
+  openModal("login");
+  alert("Entre na sua conta para continuar.");
+  return;
+ }
+ alert("Checkout demonstrativo! Para receber pagamentos reais, integre um gateway de pagamento.");
+}
+
+document.getElementById("search").addEventListener("input",renderProducts);
+document.querySelectorAll(".overlay").forEach(el=>{
+ el.addEventListener("click",e=>{
+  if(e.target===el)el.style.display="none";
+ });
+});
+
+saveCart();
+renderProducts();
+</script>
+</body>
+</html>
